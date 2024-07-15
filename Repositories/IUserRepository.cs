@@ -7,4 +7,6 @@ public interface IUserRepository
     User CreateUser(User user);
     string SignIn (string username, string password);
     User GetCurrentUser ();
+
+    User GetUserById(int user);
 }
