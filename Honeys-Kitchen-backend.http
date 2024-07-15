@@ -1,0 +1,6 @@
+@Honeys_Kitchen_backend_HostAddress = http://localhost:5268
+
+GET {{Honeys_Kitchen_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
