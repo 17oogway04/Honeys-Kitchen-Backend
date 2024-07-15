@@ -7,6 +7,10 @@ public class HoneysKitchenDbContext : DbContext
 {
     public DbSet<User> User {get; set;}
 
+    public HoneysKitchenDbContext(DbContextOptions<HoneysKitchenDbContext>options)
+        : base(options)
+        {}
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
