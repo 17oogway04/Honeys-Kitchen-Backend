@@ -80,4 +80,8 @@ public class UserRepository : IUserRepository
 
         return BuildToken(user);
     }
+
+    public User GetUserById(int user){
+        return _context?.User.SingleOrDefault(p => p.UserId == user)!;
+    }
 }
