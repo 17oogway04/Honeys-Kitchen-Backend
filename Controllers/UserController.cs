@@ -24,9 +24,9 @@ public class UserController : ControllerBase
     [Route("register")]
     public ActionResult CreateUser(User user)
     {
-        if(user == null || !ModelState.IsValid)
+        if(!ModelState.IsValid)
         {
-            return BadRequest();
+            return BadRequest(ModelState);
         }
 
         _userRepository.CreateUser(user);
