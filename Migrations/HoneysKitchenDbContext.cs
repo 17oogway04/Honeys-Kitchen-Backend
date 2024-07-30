@@ -20,8 +20,8 @@ public class HoneysKitchenDbContext : DbContext
             entity.Property(e => e.FirstName).IsRequired();
             entity.Property(e => e.LastName).IsRequired();
             entity.Property(e => e.PhoneNumber);
-            entity.Property(e => e.EmailAddress).IsRequired();
-            entity.HasIndex(x => x.EmailAddress).IsUnique();
+            entity.Property(e => e.Email).IsRequired();
+            entity.HasIndex(x => x.Email).IsUnique();
             entity.Property(e => e.Password).IsRequired();
             entity.Property(e => e.Address);
         });

@@ -32,7 +32,7 @@ public class UserRepository : IUserRepository
         var claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.UserId.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.EmailAddress ?? ""),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
             new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
             new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? "")
 
@@ -64,9 +64,9 @@ public class UserRepository : IUserRepository
         return _context?.User.SingleOrDefault()!;
     }
 
-    public string SignIn(string emailaddress, string password)
+    public string SignIn(string email, string password)
     {
-        var user = _context?.User.SingleOrDefault(x => x.EmailAddress == emailaddress);
+        var user = _context?.User.SingleOrDefault(x => x.Email == email);
         var verified = false;
 
         if(user != null){
