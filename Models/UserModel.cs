@@ -15,7 +15,7 @@ public class User
     public string? LastName {get; set;}
     [Required]
     [EmailAddress]
-    public string? EmailAddress {get; set;} //email address, phone #, and address will be unavailable for right now
+    public string? Email {get; set;} //email address, phone #, and address will be unavailable for right now
     public string? PhoneNumber {get; set;}
     public string? Address {get; set;}
 }
