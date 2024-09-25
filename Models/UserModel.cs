@@ -18,4 +18,6 @@ public class User
     public string? Email {get; set;} //email address, phone #, and address will be unavailable for right now
     public string? PhoneNumber {get; set;}
     public string? Address {get; set;}
+
+    public string? ProfilePicture{get; set;}
 }

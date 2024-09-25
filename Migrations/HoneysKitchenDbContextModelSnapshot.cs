@@ -44,6 +44,9 @@ namespace Honeys_Kitchen_backend.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ProfilePicture")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("Email")

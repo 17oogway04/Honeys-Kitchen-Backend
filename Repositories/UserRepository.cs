@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Honeys_Kitchen_backend.Migrations;
 using Honeys_Kitchen_backend.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using bcrypt = BCrypt.Net.BCrypt;
 
@@ -11,7 +12,7 @@ namespace Honeys_Kitchen_backend.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private static HoneysKitchenDbContext? _context;
+    private static HoneysKitchenDbContext _context;
     private static IConfiguration? _config;
 
     public UserRepository(HoneysKitchenDbContext context, IConfiguration config)
@@ -83,5 +84,28 @@ public class UserRepository : IUserRepository
 
     public User GetUserById(int user){
         return _context?.User.SingleOrDefault(p => p.UserId == user)!;
+    }
+
+    public void UpdateUser(User user)
+    {
+        var existingUser = _context.User.SingleOrDefault(u => u.UserId == user.UserId);
+        if(existingUser != null)
+        {
+            existingUser.FirstName = user.FirstName;
+            existingUser.LastName = user.LastName;
+            existingUser.Email = user.Email;
+            existingUser.Password = user.Password;
+            existingUser.Address = user.Address;
+            existingUser.ProfilePicture = user.ProfilePicture;
+            existingUser.PhoneNumber = user.PhoneNumber;
+            _context.SaveChanges();
+        }
+    }
+
+    public async Task<User?> GetUserByUsername(string username)
+    {
+        return await _context.User
+            .Where(x => x.Email == username)
+            .SingleOrDefaultAsync();
     }
 }
