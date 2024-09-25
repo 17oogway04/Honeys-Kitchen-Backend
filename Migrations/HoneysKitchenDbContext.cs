@@ -23,6 +23,7 @@ public class HoneysKitchenDbContext : DbContext
             entity.Property(e => e.Email).IsRequired();
             entity.HasIndex(x => x.Email).IsUnique();
             entity.Property(e => e.Password).IsRequired();
+            entity.Property(e => e.ProfilePicture);
             entity.Property(e => e.Address);
         });
     }
