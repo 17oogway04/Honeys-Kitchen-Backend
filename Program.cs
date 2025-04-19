@@ -72,7 +72,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors(builder => builder
-    .WithOrigins("http://localhost:8100", "http://localhost:3000")
+    // .WithOrigins("http://localhost:8100", "http://localhost:3000")
+    .AllowAnyOrigin()
     .AllowAnyHeader()
     .AllowAnyMethod()
 );
