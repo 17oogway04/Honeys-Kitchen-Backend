@@ -36,7 +36,7 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet]
+    [HttpPost]
     [Route("login")]
     public ActionResult<string> SignIn(string email, string password)
     {
