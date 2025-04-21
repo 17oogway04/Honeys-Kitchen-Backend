@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Honeys_Kitchen_backend.Migrations;
-using Honeys_Kitchen_backend.Models;
+using Models = Honeys_Kitchen_backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using bcrypt = BCrypt.Net.BCrypt;
@@ -21,7 +21,7 @@ public class UserRepository : IUserRepository
         _config = config;
     }
 
-    private string BuildToken(User user)
+    private string BuildToken(Models.AppUser user)
     {
         var secret = _config?.GetValue<string>("TokenSecret");
         var signinkey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!));
@@ -50,24 +50,24 @@ public class UserRepository : IUserRepository
         return encodedJwt;
     }
 
-    public User CreateUser(User user)
+    public Models.AppUser CreateUser(Models.AppUser appuser)
     {
-        var passwordHash = bcrypt.HashPassword(user.Password);
-        user.Password = passwordHash;
+        var passwordHash = bcrypt.HashPassword(appuser.Password);
+        appuser.Password = passwordHash;
 
-        _context?.Add(user);
+        _context?.Add(appuser);
         _context?.SaveChanges();
-        return user;
+        return appuser;
     }
 
-    public User GetCurrentUser()
+    public Models.AppUser GetCurrentUser()
     {
-        return _context?.User.SingleOrDefault()!;
+        return _context?.AppUsers.SingleOrDefault()!;
     }
 
     public string SignIn(string email, string password)
     {
-        var user = _context?.User.SingleOrDefault(x => x.Email == email);
+        var user = _context?.AppUsers.SingleOrDefault(x => x.Email == email);
         var verified = false;
 
         if(user != null){
@@ -82,13 +82,13 @@ public class UserRepository : IUserRepository
         return BuildToken(user);
     }
 
-    public User GetUserById(int user){
-        return _context?.User.SingleOrDefault(p => p.UserId == user)!;
+    public Models.AppUser GetUserById(int user){
+        return _context?.AppUsers.SingleOrDefault(p => p.UserId == user)!;
     }
 
-    public void UpdateUser(User user)
+    public void UpdateUser(Models.AppUser user)
     {
-        var existingUser = _context.User.SingleOrDefault(u => u.UserId == user.UserId);
+        var existingUser = _context.AppUsers.SingleOrDefault(u => u.UserId == user.UserId);
         if(existingUser != null)
         {
             existingUser.FirstName = user.FirstName;
@@ -102,9 +102,9 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public async Task<User?> GetUserByUsername(string username)
+    public async Task<Models.AppUser?> GetUserByUsername(string username)
     {
-        return await _context.User
+        return await _context.AppUsers
             .Where(x => x.Email == username)
             .SingleOrDefaultAsync();
     }

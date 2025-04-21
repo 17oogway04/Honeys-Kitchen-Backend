@@ -25,7 +25,7 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public ActionResult CreateUser(User user)
+    public ActionResult CreateUser(AppUser user)
     {
         if (!ModelState.IsValid)
         {
@@ -66,7 +66,7 @@ public class UserController : ControllerBase
         }
 
         var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value!);
-        User currentUser = _userRepository.GetUserById(id);
+        AppUser currentUser = _userRepository.GetUserById(id);
 
         return Ok(currentUser);
     }
@@ -112,7 +112,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("by-username/{username}")]
-    public async Task<ActionResult<User>> GetUserByUsername(string username)
+    public async Task<ActionResult<AppUser>> GetUserByUsername(string username)
     {
         var name = _userRepository.GetUserByUsername(username);
         if(name == null){

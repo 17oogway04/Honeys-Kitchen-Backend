@@ -1,16 +1,16 @@
-using Honeys_Kitchen_backend.Models;
+using Models = Honeys_Kitchen_backend.Models;
 
 namespace Honeys_Kitchen_backend.Repositories;
 
 public interface IUserRepository
 {
-    User CreateUser(User user);
+    Models.AppUser CreateUser(Models.AppUser user);
     string SignIn(string username, string password);
-    User GetCurrentUser();
+    Models.AppUser GetCurrentUser();
 
-    User GetUserById(int user);
-    void UpdateUser(User user);
-    Task<User?> GetUserByUsername(string username);
+    Models.AppUser GetUserById(int user);
+    void UpdateUser(Models.AppUser user);
+    Task<Models.AppUser?> GetUserByUsername(string username);
 
 
 }

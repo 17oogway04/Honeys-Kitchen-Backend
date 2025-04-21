@@ -1,5 +1,5 @@
 using System.Text;
-using Honeys_Kitchen_backend.Migrations;
+using Honeys_Kitchen_backend;
 using Honeys_Kitchen_backend.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

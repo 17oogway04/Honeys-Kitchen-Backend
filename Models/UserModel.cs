@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Honeys_Kitchen_backend.Models;
 
-public class User
+public class AppUser
 {
     [JsonIgnore]
     public int UserId {get; set;}
