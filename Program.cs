@@ -66,7 +66,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policy => 
     {
         policy
-            .AllowAnyOrigin()
+            .WithOrigins("https://honeyskitchenllc.com")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
