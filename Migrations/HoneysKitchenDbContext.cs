@@ -17,6 +17,7 @@ public class HoneysKitchenDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<AppUser>(entity => {
+            entity.ToTable("User");
             entity.HasKey(e => e.UserId);
             entity.Property(e => e.FirstName).IsRequired();
             entity.Property(e => e.LastName).IsRequired();
