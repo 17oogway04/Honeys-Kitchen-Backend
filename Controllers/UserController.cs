@@ -36,16 +36,15 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost]
-    [Route("login")]
-    public ActionResult<string> SignIn(string email, string password)
+   [HttpPost("login")]
+    public ActionResult<string> SignIn([FromBody] LoginRequest request)
     {
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
         {
             return BadRequest();
         }
 
-        var token = _userRepository.SignIn(email, password);
+        var token = _userRepository.SignIn(request.Email, request.Password);
 
         if (string.IsNullOrWhiteSpace(token))
         {
