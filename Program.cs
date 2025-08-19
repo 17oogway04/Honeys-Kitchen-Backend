@@ -84,8 +84,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseRouting();
 
 app.UseCors("AllowFrontend");
 
@@ -93,5 +92,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapMethods("{*path}", new[] { "OPTIONS" }, () => Results.Ok());
+
 app.Run();
 
