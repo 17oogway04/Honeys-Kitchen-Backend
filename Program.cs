@@ -5,8 +5,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    WebRootPath = "wwwroot",
+    ContentRootPath = Directory.GetCurrentDirectory()
+});
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+    serverOptions.ListenAnyIP(int.Parse(port));
+});
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
@@ -66,13 +76,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-                "https://honeyskitchenllc.com", 
-                "http://localhost:4200",       
-                "http://localhost:8100"        
+                "https://honeyskitchenllc.com",
+                "http://localhost:4200",
+                "http://localhost:8100"
             )
             .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials(); 
+            .AllowAnyMethod();
     });
 });
 
@@ -83,6 +92,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseRouting();
 
