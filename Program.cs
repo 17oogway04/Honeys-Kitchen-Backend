@@ -40,12 +40,12 @@ builder.Services.AddSqlite<HoneysKitchenDbContext>("Data Source = HoneysKitchen.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 var secretKey = builder.Configuration["TokenSecret"];
 
-builder.Services.AddAuthentication(options => 
+builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddJwtBearer(cfg => 
+.AddJwtBearer(cfg =>
 {
     cfg.RequireHttpsMetadata = true;
     cfg.SaveToken = true;
@@ -61,20 +61,23 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddCors(options => 
+builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy => 
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        policy
-            .WithOrigins("https://honeyskitchenllc.com")
+        policy.WithOrigins(
+                "https://honeyskitchenllc.com", 
+                "http://localhost:4200",       
+                "http://localhost:8100"        
+            )
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .AllowCredentials(); 
     });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -83,10 +86,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCors("AllowAll");
+
+app.UseCors("AllowFrontend");
+
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
 
+app.MapControllers();
 app.Run();
 
