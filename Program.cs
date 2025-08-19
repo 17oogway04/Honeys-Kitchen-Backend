@@ -1,5 +1,6 @@
 using System.Text;
 using Honeys_Kitchen_backend;
+using Honeys_Kitchen_backend.Controllers;
 using Honeys_Kitchen_backend.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,9 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+       .AddApplicationPart(typeof(Honeys_Kitchen_backend.Controllers.UserController).Assembly);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
